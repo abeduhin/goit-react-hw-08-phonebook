@@ -3,21 +3,13 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import itemContacts from './ItemContactList/contacts.json';
+import itemContacts from '../data/contacts.json';
 
 export class App extends Component {
   state = {
-    // contacts:[],
     contacts: itemContacts,
-    //  [
-      // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    // ],
     filter: '',
-    // name: '',
-    // number: '',
+    
   };
 
   handleChange = e => {
@@ -43,9 +35,9 @@ export class App extends Component {
     // змінюємо стан
   };
 
-  handleDelete = e => {
+  handleDelete = id => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== e),
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
   // прописуємо функцію яка міняє стан при активації кнопки DElete (порередній стан prevState )

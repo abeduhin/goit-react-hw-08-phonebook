@@ -1,7 +1,6 @@
 import propTypes from 'prop-types';
 import css from './ContactList.module.css';
-// import React, { Component } from 'react';
-// import contacts from '../ItemContactList/contacts.json';
+
 
 // список контактів (масив елементів містить ім'я. номер телефону )
 export const ContactList = ({ contacts, handleDelete }) => (

@@ -11,9 +11,7 @@ const INITIAL_STATE = {
 
 export class ContactForm extends Component {
   state = { ...INITIAL_STATE };
-  //   name: '',
-  //   number: '',
-  // };
+  
   // початковий стан з властивостями name та number (два input)
 
   handleChange = e => {
