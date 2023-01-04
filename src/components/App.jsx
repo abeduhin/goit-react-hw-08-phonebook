@@ -5,12 +5,32 @@ import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import itemContacts from '../data/contacts.json';
 
+const LOCAL_KEY = 'contacts';
 export class App extends Component {
   state = {
     contacts: itemContacts,
     filter: '',
     
   };
+
+  componentDidMount() {
+    const contactsFromList = localStorage.getItem(LOCAL_KEY);
+    const parseContacts = JSON.parse(contactsFromList);
+
+    if (parseContacts) {
+      this.setState({ contacts: parseContacts });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const prevStateContacts = prevState.contacts;
+    const nextStateContacts = this.state.contacts;
+
+    if (prevStateContacts !== nextStateContacts) {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(nextStateContacts));
+    }
+  }
+
 
   handleChange = e => {
     const { name, value } = e.target;
