@@ -3,12 +3,12 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import itemContacts from '../data/contacts.json';
+// import itemContacts from '../data/contacts.json';
 
 const LOCAL_KEY = 'contacts';
 export class App extends Component {
   state = {
-    contacts: itemContacts,
+    contacts: [],
     filter: '',
     
   };
