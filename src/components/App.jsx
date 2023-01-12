@@ -80,4 +80,4 @@ import { ContactList } from './ContactList/ContactList';
       </div>
     );
   }
-// виводимо розмітку
+// виводимо HTTML розмітку
