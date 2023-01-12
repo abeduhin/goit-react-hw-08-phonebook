@@ -1,43 +1,42 @@
 import propTypes from 'prop-types';
-import React, { Component } from 'react';
 import css from './ContactForm.module.css';
+import React, { useState } from 'react';
 
-// форма додавання контактів (2 інпута та кнопка)
+// // форма додавання контактів (2 інпута та кнопка)
 
-const INITIAL_STATE = {
-  name: '',
-  number: '',
-}
-
-export class ContactForm extends Component {
-  state = { ...INITIAL_STATE };
+export const ContactForm = ({ handleSubmit }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
   
   // початковий стан з властивостями name та number (два input)
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+  const handleChangeName = e => {
+  const { value } = e.target;
+  setName(value);
+  };
+
+  const handleChangeNumber = e => {
+  const { value } = e.target;
+  setNumber(value);
   };
   // функція для обробки події де вона сталося та зміни початкового стану. Унівесальний метод (для обох інпутів) який записує в нашу форму те що ввів юзер. Змінна name приймає значення name або number
-
-  handleSubmit = e => {
+  
+   const handleFormSubmit = e => {
     e.preventDefault();
     // відмянюємо поведінку за замовчуванням
     const form = e.currentTarget;
-    this.props.handleSubmit(this.state);
+    handleSubmit({ name: name, number: number });
     // добавляємо новий контакт в список контактів
     form.reset();
     // скидаємо значення неконтрольованих полів форми до їх початкових значень
-    this.setState({ ...INITIAL_STATE })
+    setName('');
+    setNumber('');
     // очищаємо форму
   };
   // функція для обробки події де вона відслідила
 
-  render() {
-    const { name, number } = this.state;
-
     return (
-      <form className={css.form} onSubmit={this.handleSubmit}>
+      <form className={css.form} onSubmit={handleFormSubmit}>
         {/* вішаємо обробника подій onSubmit, для відправки форми в React */}
         <label className={css.formLabel}>Name </label>
         <input
@@ -50,7 +49,7 @@ export class ContactForm extends Component {
           placeholder="Enter name"
           value={name}
           // дані, які ми хочемо забрати у юзера встановленного порядку (pattern)
-          onChange={this.handleChange}
+          onChange={handleChangeName}
           // вішаємо обробника подій onChange який слідкує за змінами в інпуті - функція handleChange
         />
         <label className={css.formLabel}>Number </label>
@@ -64,7 +63,7 @@ export class ContactForm extends Component {
           placeholder="Enter phone number"
           value={number}
           // дані, які ми хочемо забрати у юзера встановленного порядку (pattern)
-          onChange={this.handleChange}
+          onChange={handleChangeNumber}
           // вішаємо обробника подій onChange який слідкує за змінами в інпуті - функція handleChange
         />
         <button className={css.formBtn} type="submit">
@@ -73,7 +72,7 @@ export class ContactForm extends Component {
       </form>
     );
   }
-}
+
 
 ContactForm.propTypes = {
   handleSubmit: propTypes.func.isRequired,
