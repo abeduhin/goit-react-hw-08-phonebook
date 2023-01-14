@@ -5,38 +5,24 @@ import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 
   export const App = () => {
-    const [contacts, setContacts] = useState([]);    
-    const [formContacts, setFormContacts] = useState(true);
-    const [filter, setFilter] = useState('');
-      
+    const [contacts, setContacts] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
+    });
+    // Лінива ініціалізація стейту
     useEffect(() => {
-    if (formContacts) {
-      const contactsFromList = localStorage.getItem('contacts');
-
-      if (contactsFromList !== 'undefined') {
-        const parseContacts = JSON.parse(contactsFromList);
-
-        if (parseContacts) {
-          setContacts(parseContacts);
-        }
-      }
-      setFormContacts(false);
-    } else {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-    }, [contacts, formContacts]);
-    // Об'єднаємо 2 метода життєвого циклу componentDidMount та componentDidUpdate
- 
+     window.localStorage.setItem('contacts', JSON.stringify(contacts))
+  }, [contacts]);
+    
+    const [filter, setFilter] = useState('');
+         
     const handleChange = e => {
     const { value } = e.target;
     setFilter(value);
   };
    // прописуємо фунцію для вводу пошуку
     
-    const handleSubmit = e => {
+    const handleSubmit = ({ name, number }) => {
     const id = nanoid();
-    const name = e.name;
-    const number = e.number;
     const contactsLists = [...contacts];
 
     if (contactsLists.findIndex(contact => name === contact.name) !== -1) {

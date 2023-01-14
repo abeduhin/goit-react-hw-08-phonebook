@@ -24,11 +24,9 @@ export const ContactForm = ({ handleSubmit }) => {
    const handleFormSubmit = e => {
     e.preventDefault();
     // відмянюємо поведінку за замовчуванням
-    const form = e.currentTarget;
+    
     handleSubmit({ name: name, number: number });
     // добавляємо новий контакт в список контактів
-    form.reset();
-    // скидаємо значення неконтрольованих полів форми до їх початкових значень
     setName('');
     setNumber('');
     // очищаємо форму
