@@ -3,5 +3,6 @@ export const getContacts = state => {
 };
 
 export const getFilter = state => {
-  return state.contacts.filter;
+  return state.filter;
+  // return state.contacts.filter;
 };

@@ -1,7 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit"
 
-
-
 const contactsInitialState = [
     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
@@ -15,9 +13,9 @@ const contactsSlise = createSlice({
         contacts: contactsInitialState,
     },
     
-    redusers: {
+    reducers: {
         addContacts: {
-            reduser(state, action) {
+            reducer(state, action) {
                 state.contacts.push(action.payload);
             },
             prepare({ name, number }) {
@@ -33,13 +31,14 @@ const contactsSlise = createSlice({
         
         deleteContacts(state, action) {
             state.contacts = state.contacts.filter((contact) => contact.id !== action.payload);
-            console.log(action);
+            // prepare - прослойка в reducer
         },
 
-    }
-})
+    },
+});
+
  const contactsReducer = contactsSlise.reducer;
-export const { addContacts, deleteContacts } = contactsSlise.actions
+export const { addContacts, deleteContacts } = contactsSlise.actions;
 export default contactsReducer;
 
 // експортуємо декстуризований масив action
