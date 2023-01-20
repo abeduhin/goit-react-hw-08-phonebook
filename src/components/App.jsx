@@ -6,8 +6,8 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts, deleteContacts } from 'redux/contactsSlise';
-import { filterGange } from 'redux/filterSlise';
+import { addContacts, deleteContacts } from 'redux/contactsSlice';
+import { filterGange } from 'redux/filterSlice';
 import { getContacts, getFilter } from 'redux/selectors';
 
   export const App = () => {

@@ -7,7 +7,7 @@ const contactsInitialState = [
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ]
 
-const contactsSlise = createSlice({
+const contactsSlice = createSlice({
     name: 'contacts',
     initialState: {
         contacts: contactsInitialState,
@@ -37,8 +37,8 @@ const contactsSlise = createSlice({
     },
 });
 
- const contactsReducer = contactsSlise.reducer;
-export const { addContacts, deleteContacts } = contactsSlise.actions;
+ const contactsReducer = contactsSlice.reducer;
+export const { addContacts, deleteContacts } = contactsSlice.actions;
 export default contactsReducer;
 
 // експортуємо декстуризований масив action
