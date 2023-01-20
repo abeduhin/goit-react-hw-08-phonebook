@@ -3,9 +3,12 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+import { useDispatch } from 'react-redux';
+import { addContacts, deleteContacts } from 'redux/contactsSlise';
+import { filterGange } from 'redux/filterSlise';
 
   export const App = () => {
-    const [contacts, setContacts] = useState(() => {
+    const [contacts, setContacts] = useState (() => {
     return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
     });
     // Лінива ініціалізація стейту
@@ -14,9 +17,11 @@ import { ContactList } from './ContactList/ContactList';
   }, [contacts]);
     
     const [filter, setFilter] = useState('');
+    const dispatch = useDispatch()
          
     const handleChange = e => {
-    const { value } = e.target;
+      const { value } = e.target;
+      dispatch (filterGange(e))
     setFilter(value);
   };
    // прописуємо фунцію для вводу пошуку
@@ -29,16 +34,20 @@ import { ContactList } from './ContactList/ContactList';
       alert(`${name} is already in contacts.`);
     } else {
       contactsLists.push({ id, name, number });
+      
     }
     // прописуємо умову - якщо новий елемент списка (name) вже є у списку контактів (метод findIndex повертає індекс відмінний від -1 ). то виводимо повідомлення якщо не має то добовляємо до списку контактів
-      
+      dispatch(addContacts({ name, number }));
+      console.log()
       setContacts(contactsLists);
     // змінюємо стан  
   };
 
     const handleDelete = id => {
-    setContacts(contacts.filter(contact => contact.id !== id));
-  };
+      setContacts(contacts.filter(contact => contact.id !== id));
+    dispatch(deleteContacts(id));
+      
+    };
   // прописуємо функцію яка міняє стан при активації кнопки DElete 
 
     const getFilteredContacts = () => {
@@ -49,7 +58,7 @@ import { ContactList } from './ContactList/ContactList';
     });
     return filterContactsList;
   };
-   // прописуємо функцію яка фільтрує список кониактів незважаючі на регистр.
+   // прописуємо функцію яка фільтрує список контактів незважаючі на регистр.
 
       return (
       <div>

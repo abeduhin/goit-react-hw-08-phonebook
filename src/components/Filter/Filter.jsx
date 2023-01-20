@@ -1,9 +1,15 @@
 import propTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import css from './Filter.module.css';
 
 // форма фільтра (підпис та інпут)
 
-export const Filter = ({ filter, handleChange }) => (
+export const Filter = ({ filter, handleChange }) => {
+
+  const filterContact = useSelector(state => state.filter)
+    
+  return (
+    
   <div>
     <label className={css.filterLabel}>Find contacts by Name </label>
     <input
@@ -11,11 +17,12 @@ export const Filter = ({ filter, handleChange }) => (
       type="text"
       name="filter"
       placeholder="Enter filter"
-      value={filter}
+      value={filterContact}
       onChange={handleChange}
     />
-  </div>
-);
+    </div>
+  )
+};
 
 Filter.propTypes = {
   filter: propTypes.string.isRequired,
