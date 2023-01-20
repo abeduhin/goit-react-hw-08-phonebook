@@ -15,7 +15,7 @@ const contactsSlise = createSlice({
         contacts: contactsInitialState,
     },
     
-    reducers: {
+    redusers: {
         addContacts: {
             reduser(state, action) {
                 state.contacts.push(action.payload);

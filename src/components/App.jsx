@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContacts, deleteContacts } from 'redux/contactsSlise';
 import { filterGange } from 'redux/filterSlise';
+import { getContacts, getFilter } from 'redux/selectors';
 
   export const App = () => {
-    const [contacts, setContacts] = useState (() => {
-    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
-    });
+    // const [contacts, setContacts] = useState (() => {
+    // return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
+    // });
     // Лінива ініціалізація стейту
-    useEffect(() => {
-     window.localStorage.setItem('contacts', JSON.stringify(contacts))
-  }, [contacts]);
+  //   useEffect(() => {
+  //    window.localStorage.setItem('contacts', JSON.stringify(contacts))
+  // }, [contacts]);
     
-    const [filter, setFilter] = useState('');
+    // const [filter, setFilter] = useState('');
+
+    const contacts = useSelector(getContacts);
+    const filter = useSelector(getFilter);
     const dispatch = useDispatch()
          
     const handleChange = e => {
-      const { value } = e.target;
+      // const { value } = e.target;
       dispatch (filterGange(e))
-    setFilter(value);
+    // setFilter(value);
   };
    // прописуємо фунцію для вводу пошуку
     
@@ -39,12 +43,12 @@ import { filterGange } from 'redux/filterSlise';
     // прописуємо умову - якщо новий елемент списка (name) вже є у списку контактів (метод findIndex повертає індекс відмінний від -1 ).то виводимо повідомлення якщо не має то добовляємо до списку контактів
       dispatch(addContacts({ name, number }));
       console.log()
-      setContacts(contactsLists);
+      // setContacts(contactsLists);
     // змінюємо стан  
   };
 
     const handleDelete = id => {
-      setContacts(contacts.filter(contact => contact.id !== id));
+      // setContacts(contacts.filter(contact => contact.id !== id));
     dispatch(deleteContacts(id));
       
     };
