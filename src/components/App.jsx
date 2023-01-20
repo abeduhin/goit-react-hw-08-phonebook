@@ -1,6 +1,3 @@
-// import React , { useState, useEffect } from 'react';
-// import { nanoid } from 'nanoid';
-
 import React from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
@@ -11,15 +8,7 @@ import { filterGange } from 'redux/filterSlice';
 import { getContacts, getFilter } from 'redux/selectors';
 
   export const App = () => {
-    // const [contacts, setContacts] = useState (() => {
-    // return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
-    // });
-    // Лінива ініціалізація стейту
-  //   useEffect(() => {
-  //    window.localStorage.setItem('contacts', JSON.stringify(contacts))
-  // }, [contacts]);
-    
-    // const [filter, setFilter] = useState('');
+   
 
     const contacts = useSelector(getContacts);
     const filter = useSelector(getFilter);
@@ -28,18 +17,12 @@ import { getContacts, getFilter } from 'redux/selectors';
     const handleChange = e => {
       const { value } = e.target;
       dispatch (filterGange(value))
-      // dispatch (filterGange(e))
-    // setFilter(value);
-  };
+    };
    // прописуємо фунцію для вводу пошуку
     
     const handleSubmit = ({ name, number }) => {
-    // const id = nanoid();
-    // const contactsLists = [...contacts];
-
       if (contacts.findIndex(contact => name.toLowerCase() === contact.name.toLowerCase()) !== -1) {
-        //  if (contactsLists.findIndex(contact => name === contact.name) !== -1)
-      
+            
         alert(`${name} is already in contacts.`);
         return
       }
