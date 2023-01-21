@@ -22,24 +22,17 @@ import { getContacts, getFilter } from 'redux/selectors';
     
     const handleSubmit = ({ name, number }) => {
       if (contacts.findIndex(contact => name.toLowerCase() === contact.name.toLowerCase()) !== -1) {
-            
         alert(`${name} is already in contacts.`);
         return
-      }
-       
-    // } else {
-    //   contactsLists.push({ id, name, number });
-      
-    // }
+      }      
+    
     // прописуємо умову - якщо новий елемент списка (name) вже є у списку контактів (метод findIndex повертає індекс відмінний від -1 )(незалежно від регистра метод toLowerCase приводить все до нижньго регистра).то виводимо повідомлення якщо не має то добовляємо до списку контактів
       dispatch(addContacts({ name, number }));
-      // console.log(addContacts)
-      // setContacts(contactsLists);
+      
     // змінюємо стан  
   };
 
-    const handleDelete = id => {
-      // setContacts(contacts.filter(contact => contact.id !== id));
+    const handleDelete = id => {     
     dispatch(deleteContacts(id));
       
     };

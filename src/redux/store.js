@@ -1,6 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import contactsReducer from './contactsSlice';
-import { filterReducer } from './filterSlice';
+import { configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -12,16 +10,18 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { rootReducer } from './root - reducer';
 
 const persistConfig = {
-  key: 'contacts',
+  key: 'contactsPhonebook',
   storage,
-};
+  // whitelist: ['contacts'],
+  blacklist: ['filter'],
 
-const rootReducer = combineReducers ({
-  contacts: contactsReducer,
-  filter: filterReducer,
-});
+  // whitelist - то що потрібно залишити із rootReducer
+  // blacklist - то що потрібно видалити із rootReducer
+
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
