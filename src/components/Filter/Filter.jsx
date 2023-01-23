@@ -4,7 +4,7 @@ import css from './Filter.module.css';
 
 // форма фільтра (підпис та інпут)
 
-export const Filter = ({ filter, handleChange }) => {
+export const Filter = ({handleChange }) => {
 
   const filterContact = useSelector(state => state.filter)
     

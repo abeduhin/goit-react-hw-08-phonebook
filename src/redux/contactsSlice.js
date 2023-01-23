@@ -1,4 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit"
+// import { fetchContacts } from "./contactsThunk";
 
 const contactsInitialState = [
     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -36,6 +37,20 @@ const contactsSlice = createSlice({
 
     },
 });
+
+// extraReducers: builder => {
+//     builder
+//         .addCase(fetchContacts.pending, (state, action) => {
+//             state.isLoading = true;
+//     });
+      
+//       addCase(fetchContacts.fulfilled, (state, action) => {
+//             state.isLoading = false;
+//             state.error = null;
+//             state.items = action.payload.data;
+//     });
+      
+// }
 
  const contactsReducer = contactsSlice.reducer;
 export const { addContacts, deleteContacts } = contactsSlice.actions;
