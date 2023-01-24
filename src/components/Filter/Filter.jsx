@@ -7,6 +7,11 @@ import css from './Filter.module.css';
 export const Filter = ({handleChange }) => {
 
   const filterContact = useSelector(state => state.filter)
+  const dispatch = useDispatch();
+  const handleChange = e => {
+      const { value } = e.target;
+      dispatch (filterGange(value))
+    };
     
   return (
     

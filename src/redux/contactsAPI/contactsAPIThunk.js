@@ -5,7 +5,7 @@ import axios from "axios";
 
 export const contactsAPI = axios.create({
     // Axios.create функція в Axios, яка використовується для створення нового екземпляра з конфігурацією користувача
-    baseURL: 'https://63cc5d1a5c6f2e1d84c5c3e8.mockapi.io/contacts/'
+    baseURL: 'https://63cc5d1a5c6f2e1d84c5c3e8.mockapi.io/contacts'
 });
 
 export const fetchContacts = createAsyncThunk('contacts/fetchAll',
@@ -24,7 +24,7 @@ export const fetchContacts = createAsyncThunk('contacts/fetchAll',
 export const addContact = createAsyncThunk('contacts/addContact',
     async (contact, { rejectWithValue }) => {
         try {
-            const { data } = await contactsAPI.post(contact);
+            const { data } = await contactsAPI.post('', contact);
             return data;
         } catch (error) {
             return rejectWithValue(error.message);

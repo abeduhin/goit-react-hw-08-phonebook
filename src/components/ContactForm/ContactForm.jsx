@@ -9,6 +9,18 @@ export const ContactForm = ({ handleSubmit }) => {
   const [number, setNumber] = useState('');
   
   // початковий стан з властивостями name та number (два input)
+  const contacts = useSelector(getContacts);
+  const handleSubmit = ({ name, phone }) => {
+      if (contacts.findIndex(contact => name.toLowerCase() === contact.name.toLowerCase()) !== -1) {
+        alert(`${name} is already in contacts.`);
+        return
+      }      
+    
+    // прописуємо умову - якщо новий елемент списка (name) вже є у списку контактів (метод findIndex повертає індекс відмінний від -1 )(незалежно від регистра метод toLowerCase приводить все до нижньго регистра).то виводимо повідомлення якщо не має то добовляємо до списку контактів
+      dispatch(addContact({ name, phone }));
+      
+    // змінюємо стан  
+  };
 
   const handleChangeName = e => {
   const { value } = e.target;
