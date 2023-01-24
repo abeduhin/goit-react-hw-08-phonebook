@@ -47,7 +47,7 @@ const contactsAPISlice = createSlice({
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = state.items.filter(item => item.id !== action.payload);        
+        // state.items = state.items.filter(item => item.id !== action.payload);        
       });
     // fulfilled - успішне завершення запиту
   },

@@ -1,12 +1,12 @@
-import propTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterGange } from 'redux/filterSlice';
+import { getFilter } from 'redux/selectors';
 import css from './Filter.module.css';
 
 // форма фільтра (підпис та інпут)
 
-export const Filter = ({handleChange }) => {
-
-  const filterContact = useSelector(state => state.filter)
+export const Filter = () => {
+  const filter = useSelector(getFilter) 
   const dispatch = useDispatch();
   const handleChange = e => {
       const { value } = e.target;
@@ -22,14 +22,9 @@ export const Filter = ({handleChange }) => {
       type="text"
       name="filter"
       placeholder="Enter filter"
-      value={filterContact}
+      value={filter}
       onChange={handleChange}
     />
     </div>
   )
-};
-
-Filter.propTypes = {
-  filter: propTypes.string.isRequired,
-  handleChange: propTypes.func.isRequired,
 };

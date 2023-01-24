@@ -1,12 +1,14 @@
-// import propTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/contactsAPI/contactsAPIThunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact, fetchContacts } from 'redux/contactsAPI/contactsAPIThunk';
+import { getContacts, getFilter } from 'redux/selectors';
 import css from './ContactList.module.css';
 
 
 // список контактів (масив елементів містить ім'я. номер телефону )
-export const ContactList = ({ contacts, handleDelete }) => {
+export const ContactList = () => {
+  const contacts = useSelector(getContacts)
+  const filter = useSelector(getFilter)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,20 +19,18 @@ export const ContactList = ({ contacts, handleDelete }) => {
     dispatch(deleteContact(id));
   };
 
-  const getFilteredContacts = () => {
-    const filterContactsList = contacts.filter(contact => {
+    const filteredContactsList = contacts.filter(contact => {
       return contact.name
         .toLowerCase()
         .includes(filter.toLowerCase());
     });
-    return filterContactsList;
-  };
+    
    // прописуємо функцію яка фільтрує список контактів незважаючі на регистр.
 
   return (
     <div className={css.wraperContactList}>
       <ul className={css.contactList}>
-        {contacts.map((contact, id) => (
+        {filteredContactsList.map((contact, id) => (
           <li key={id} className={css.contactListItem}>
             {contact.name}: {contact.phone}
             <button
@@ -47,14 +47,3 @@ export const ContactList = ({ contacts, handleDelete }) => {
     </div>
   );
 };
-
-// ContactList.propTypes = {
-//   contacts: propTypes.arrayOf(
-//     propTypes.exact({
-//       id: propTypes.string.isRequired,
-//       name: propTypes.string.isRequired,
-//       phone: propTypes.string.isRequired,
-//     })
-//   ),
-//   handleDelete: propTypes.func.isRequired,
-// };
