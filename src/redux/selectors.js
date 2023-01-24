@@ -1,5 +1,5 @@
 export const getContacts = state => {
-  return state.contacts.contacts;
+  return state.contacts.items;
 };
 
 export const getFilter = state => {

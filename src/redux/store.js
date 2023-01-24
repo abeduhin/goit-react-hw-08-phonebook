@@ -10,7 +10,7 @@ import { configureStore } from '@reduxjs/toolkit';
 //   REGISTER,
 // } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
-import { rootReducer } from './root - reducer';
+import { rootReducer } from './root-reducer';
 
 // const persistConfig = {
 //   key: 'contactsPhonebook',
