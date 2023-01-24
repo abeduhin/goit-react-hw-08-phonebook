@@ -20,20 +20,20 @@ import { fetchContacts, addContact, deleteContact } from 'redux/contactsAPI/cont
       const { value } = e.target;
       dispatch (filterGange(value))
     };
-   // прописуємо фунцію для вводу пошуку
+       // прописуємо фунцію для вводу пошуку
     
     useEffect(() => {
       dispatch(fetchContacts());
     }, [dispatch]);
     
-    const handleSubmit = ({ name, number }) => {
+    const handleSubmit = ({ name, phone }) => {
       if (contacts.findIndex(contact => name.toLowerCase() === contact.name.toLowerCase()) !== -1) {
         alert(`${name} is already in contacts.`);
         return
       }      
     
     // прописуємо умову - якщо новий елемент списка (name) вже є у списку контактів (метод findIndex повертає індекс відмінний від -1 )(незалежно від регистра метод toLowerCase приводить все до нижньго регистра).то виводимо повідомлення якщо не має то добовляємо до списку контактів
-      dispatch(addContact({ name, number }));
+      dispatch(addContact({ name, phone }));
       
     // змінюємо стан  
   };
