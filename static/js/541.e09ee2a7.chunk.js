@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_homework_template=self.webpackChunkreact_homework_template||[]).push([[541],{1541:function(e,a,n){n.r(a),n.d(a,{default:function(){return c}});var o="HomePage_container__uNu-e",r="HomePage_title__UFLA3",t=n(184);function c(){return(0,t.jsx)("div",{className:o,children:(0,t.jsxs)("h1",{className:r,children:["Phonebook welcome page"," ",(0,t.jsx)("span",{role:"img","aria-label":"Telephone icon",children:"\u260e\ufe0f"})]})})}}}]);
+//# sourceMappingURL=541.e09ee2a7.chunk.js.map
