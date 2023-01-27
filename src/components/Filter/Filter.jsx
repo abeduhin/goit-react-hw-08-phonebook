@@ -1,30 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { filterGange } from 'redux/filterSlice';
-import { getFilter } from 'redux/selectors';
-import css from './Filter.module.css';
-
-// форма фільтра (підпис та інпут)
+import { useDispatch } from 'react-redux';
+import { handleFilter } from 'redux/contacts/contactsSlice';
+import Form from 'react-bootstrap/Form';
+import css from './Filter.module.css'
 
 export const Filter = () => {
-  const filter = useSelector(getFilter) 
-  const dispatch = useDispatch();
-  const handleChange = e => {
-      const { value } = e.target;
-      dispatch (filterGange(value))
+
+    const dispatch = useDispatch();
+    const onChange = e => {
+        const value = e.target.value.toLowerCase();
+        dispatch(handleFilter(value));
     };
-    
-  return (
-    
-  <div>
-    <label className={css.filterLabel}>Find contacts by Name </label>
-    <input
-      className={css.filterName}
-      type="text"
-      name="filter"
-      placeholder="Enter filter"
-      value={filter}
-      onChange={handleChange}
-    />
-    </div>
-  )
+    return (
+        <Form className='mb-1' style={{ paddingTop: 20, paddingBottom: 20 }}>
+            <Form.Group>
+                <Form.Label>Find contacts by name</Form.Label>
+                <Form.Control
+                    className={css.input}
+                    type='name'
+                    onChange={onChange}
+                />
+            </Form.Group>
+        </Form>
+    );
 };

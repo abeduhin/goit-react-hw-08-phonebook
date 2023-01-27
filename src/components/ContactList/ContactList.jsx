@@ -1,49 +1,51 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact, fetchContacts } from 'redux/contactsAPI/contactsAPIThunk';
-import { getContacts, getFilter } from 'redux/selectors';
-import css from './ContactList.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, getFilter} from 'redux/contacts/selectors';
+import { deleteContact } from 'redux/contacts/operations';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
+import propTypes from 'prop-types';
 
+const getVisibleContacts = (contacts, filter) => {
+    if (!filter) {
+        return contacts;
+    } else {
+        return contacts.filter(contact => {
+            return contact.name.toLowerCase().includes(filter.toLowerCase());
+        });
+    };
+};
 
-// список контактів (масив елементів містить ім'я. номер телефону )
 export const ContactList = () => {
-  const contacts = useSelector(getContacts)
-  const filter = useSelector(getFilter)
-  const dispatch = useDispatch();
+    const contacts = useSelector(getContacts);
+    const filter = useSelector(getFilter);
+    const dispatch = useDispatch();
+    const visibleContacts = getVisibleContacts(contacts, filter);
+    const del = id => {
+        return dispatch(deleteContact(id));
+    };
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-  
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
-  };
+    return (
+        <div>
+            <ListGroup as="ol" numbered>
+                {visibleContacts.map((contact, id) => (
+                        <ListGroup.Item as="li" key={id}>
+                            <p>{contact.name}: {contact.number}</p>
+                                <Button variant='secondary' type="button" onClick={() => del(contact.id)}>
+                                    Delete
+                                </Button>
+                        </ListGroup.Item>
+                ))}
+                </ListGroup>
+        </div>
+    );
+};
 
-    const filteredContactsList = contacts.filter(contact => {
-      return contact.name
-        .toLowerCase()
-        .includes(filter.toLowerCase());
-    });
-    
-   // прописуємо функцію яка фільтрує список контактів незважаючі на регистр.
-
-  return (
-    <div className={css.wraperContactList}>
-      <ul className={css.contactList}>
-        {filteredContactsList.map((contact, id) => (
-          <li key={id} className={css.contactListItem}>
-            {contact.name}: {contact.phone}
-            <button
-              type="button"
-              className={css.contactListItemBtn}
-              onClick={() => handleDelete(contact.id)}
-            // додаємо обробника події onclick - визиваємо функцію handleDelete
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+ContactList.propTypes = {
+    contacts: propTypes.arrayOf(
+        propTypes.shape({
+            id: propTypes.string.isRequired,
+            name: propTypes.string.isRequired,
+            number: propTypes.string.isRequired,
+        })
+    ),
 };

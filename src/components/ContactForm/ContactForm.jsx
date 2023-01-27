@@ -1,94 +1,72 @@
-// import propTypes from 'prop-types';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'redux/contacts/selectors';
+import { addContact } from 'redux/contacts/operations';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import css from './ContactForm.module.css';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsAPI/contactsAPIThunk';
-
-// // форма додавання контактів (2 інпута та кнопка)
 
 export const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+    const contacts = useSelector(getContacts);
+    const dispatch = useDispatch();
 
-  // початковий стан з властивостями name та number (два input)
+    const addNewContact = e => {
+        e.preventDefault();
+        const form = e.currentTarget;  
+        const name = form.elements.name.value;
+        const number = form.elements.number.value;
+        const nameLowerCase = name.toLowerCase();
+        let onTheList = false;
 
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+        const newContact = {
+            name: name,
+            number: number,
+        };
 
-  const handleSubmit = ({ name, phone }) => {
-    if (
-      contacts.findIndex(
-        contact => name.toLowerCase() === contact.name.toLowerCase()
-      ) !== -1
-    ) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
+        contacts.forEach(contact => {
+            if (contact.name.toLowerCase() === nameLowerCase) {
+                alert(`${contact.name} is already on the list`);
+                onTheList = true;
+            };
+        });
+        if (onTheList) {
+            return;
+        };
+        
+        dispatch(addContact(newContact));
+        form.reset();
+    };
 
-    // прописуємо умову - якщо новий елемент списка (name) вже є у списку контактів (метод findIndex повертає індекс відмінний від -1 )(незалежно від регистра метод toLowerCase приводить все до нижньго регистра).то виводимо повідомлення якщо не має то добовляємо до списку контактів
-    dispatch(addContact({ name, phone }));
-
-    // змінюємо стан
-  };
-
-  const handleChangeName = e => {
-    const { value } = e.target;
-    setName(value);
-  };
-
-  const handleChangeNumber = e => {
-    const { value } = e.target;
-    setPhone(value);
-  };
-  // функція для обробки події де вона сталося та зміни початкового стану. Унівесальний метод (для обох інпутів) який записує в нашу форму те що ввів юзер. Змінна name приймає значення name або number
-
-  const handleFormSubmit = e => {
-    e.preventDefault();
-    // відмянюємо поведінку за замовчуванням
-
-    handleSubmit({ name: name, phone: phone });
-    // добавляємо новий контакт в список контактів
-    setName('');
-    setPhone('');
-    // очищаємо форму
-  };
-  // функція для обробки події де вона відслідила
-
-  return (
-    <form className={css.form} onSubmit={handleFormSubmit}>
-      {/* вішаємо обробника подій onSubmit, для відправки форми в React */}
-      <label className={css.formLabel}>Name </label>
-      <input
-        className={css.formName}
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-        placeholder="Enter name"
-        value={name}
-        // дані, які ми хочемо забрати у юзера встановленного порядку (pattern)
-        onChange={handleChangeName}
-        // вішаємо обробника подій onChange який слідкує за змінами в інпуті - функція handleChange
-      />
-      <label className={css.formLabel}>Number </label>
-      <input
-        className={css.formNumber}
-        type="tel"
-        name="phone"
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-        placeholder="Enter phone number"
-        value={phone}
-        // дані, які ми хочемо забрати у юзера встановленного порядку (pattern)
-        onChange={handleChangeNumber}
-        // вішаємо обробника подій onChange який слідкує за змінами в інпуті - функція handleChange
-      />
-      <button className={css.formBtn} type="submit">
-        Add contact
-      </button>
-    </form>
-  );
+    return (
+        <Form className="no-border" onSubmit={addNewContact}>
+            <p className={css.paragraph}>Add a new contact</p>
+            <Form.Group className='mb-3' controlId='inputName'>
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+                className={css.input}
+                type="text"
+                name="name"
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                placeholder='Enter name'
+                required
+            />
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='inputPhone'>
+            <Form.Label>Phone</Form.Label>
+            <Form.Control
+                className={css.input}
+                type="tel"
+                name="number"
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                placeholder='Enter number'
+                required
+                />
+                </Form.Group>
+            <Button variant='secondary' type="submit">
+                Add contact
+            </Button>
+        </Form>
+    );
 };

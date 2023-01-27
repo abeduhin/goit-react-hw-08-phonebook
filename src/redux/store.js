@@ -1,38 +1,39 @@
-import { configureStore } from '@reduxjs/toolkit';
-// import {
-//   persistStore,
-//   persistReducer,
-//   FLUSH,
-//   REHYDRATE,
-//   PAUSE,
-//   PERSIST,
-//   PURGE,
-//   REGISTER,
-// } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-import { rootReducer } from './root - reducer';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { contactReducer } from "./contacts/contactsSlice";
+import { authReducer } from "./auth/authSlice";
+import storage from "redux-persist/lib/storage";
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER    
+} from "redux-persist";
 
-// const persistConfig = {
-//   key: 'contactsPhonebook',
-//   storage,
-//   // whitelist: ['contacts'],
-//   blacklist: ['filter'],
+const middleware = [
+    ...getDefaultMiddleware({
+        serializableCheck: {
+            ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+    }),
+];
 
-  // whitelist - то що потрібно залишити із rootReducer
-  // blacklist - то що потрібно видалити із rootReducer
-
-// };
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const authPersistConfig = {
+    key: 'auth',
+    storage,
+    whitelist: ['token'],
+};
 
 export const store = configureStore({
-  reducer: rootReducer
-  // reducer: persistedReducer,
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware({
-  //     serializableCheck: {
-  // //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-  //     },
-  //   }),
+    reducer: {
+        auth: persistReducer(authPersistConfig, authReducer),
+        contacts: contactReducer,
+    },
+    middleware,
+    devTools: process.env.NODE_ENV === 'development',
 });
-// export const persistor = persistStore(store);
+
+export const persistor = persistStore(store);
